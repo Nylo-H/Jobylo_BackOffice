@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: 213 94% 34%;
+    --primary-light: 210 79% 42%;
+    --primary-dark: 220 93% 23%;
+    --secondary: 210 79% 46%;
+    --destructive: 0 84% 60%;
+    --warning: 38 92% 50%;
+    --success: 160 84% 39%;
+    --info: 217 91% 60%;
+    --background: 210 20% 97%;
+    --foreground: 240 30% 14%;
+    --muted: 210 20% 96%;
+    --muted-foreground: 218 11% 49%;
+    --border: 220 13% 91%;
+    --card: 0 0% 100%;
+    --radius: 0.5rem;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #F5F7FA;
+  color: #1A1A2E;
+}
