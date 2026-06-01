@@ -24,7 +24,7 @@ export const adminApi = {
     api.post<KycDocument>(`/kyc/${documentId}/reject`, { rejectionReason: reason }),
 
   // Audit
-  getAuditLogs: () => api.get<ActionLog[]>('/audit'),
+  getAuditLogs: () => api.get<ActionLog[]>('/admin/audit'),
 
   // Jobs
   getJobs: (status?: string, q?: string) =>

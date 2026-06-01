@@ -36,10 +36,13 @@ export function DataTable<T extends { id: string }>({
     }
   };
 
-  const sortedData = [...data].sort((a: any, b: any) => {
+  const sortedData = [...data].sort((a: Record<string, unknown>, b: Record<string, unknown>) => {
     if (!sortKey) return 0;
     const aVal = a[sortKey];
     const bVal = b[sortKey];
+    if (aVal === bVal) return 0;
+    if (aVal == null) return 1;
+    if (bVal == null) return -1;
     if (aVal < bVal) return sortDir === 'asc' ? -1 : 1;
     if (aVal > bVal) return sortDir === 'asc' ? 1 : -1;
     return 0;
@@ -116,7 +119,7 @@ export function DataTable<T extends { id: string }>({
                     {col.cell
                       ? col.cell({ row: { original: row } })
                       : col.accessorKey
-                      ? (row as any)[col.accessorKey]
+                      ? (row as Record<string, unknown>)[col.accessorKey] as React.ReactNode
                       : null}
                   </td>
                 ))}

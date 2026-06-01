@@ -1,19 +1,18 @@
-export type Role = 'ADMIN' | 'USER';
-export type KycStatus = 'PENDING' | 'VERIFIED' | 'REJECTED' | 'NOT_SUBMITTED';
+export type KycStatus = 'PENDING' | 'VERIFIED' | 'REJECTED';
 
 export interface User {
   id: string;
+  email: string;
+  username: string;
   firstName: string;
   lastName: string;
-  username: string;
-  email: string;
-  role: Role;
+  role: 'USER' | 'ADMIN';
   verified: boolean;
-  kycStatus: KycStatus;
-  photoProfil?: string | null;
+  kycStatus: KycStatus | null;
+  photoProfile?: string | null;
   averageRating?: number | null;
   totalRatings?: number | null;
-  createdAt: string;
+  createdAt?: string;
 }
 
 export interface LoginResponse {
@@ -22,32 +21,24 @@ export interface LoginResponse {
   verified: boolean;
 }
 
-export interface MeResponse {
-  id: string;
-  username: string;
-  email: string;
-  role: Role;
-  verified: boolean;
-  kycStatus: KycStatus;
-  photoProfil?: string | null;
-  averageRating?: number | null;
-  totalRatings?: number | null;
-}
-
-export interface AdminUserResponse extends User {
-  averageRating: number;
-  totalRatings: number;
-  lastSeenAt: string;
-  totalJobsCreated: number;
-  totalJobsCompleted: number;
-  totalTransactions: number;
-}
-
 export interface AdminStats {
   totalUsers: number;
-  totalJobs: number;
-  pendingKyc: number;
-  completedTransactions: number;
-  totalRevenue: number;
-  activeUsersToday: number;
+  verifiedUsers: number;
+  kycPending: number;
+  kycVerified: number;
+  kycRejected: number;
+  jobsPending: number;
+  jobsInProgress: number;
+  jobsDone: number;
+  jobsExpired: number;
+  transactionsHeld: number;
+  transactionsCompleted: number;
+  transactionsCancelled: number;
+  totalApplications: number;
+  applicationsPending: number;
+  totalAuditLogs: number;
 }
+
+export type AdminUserResponse = User;
+
+export type AdminStatsResponse = AdminStats;

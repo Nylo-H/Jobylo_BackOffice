@@ -1,67 +1,25 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { MeResponse } from '../types/user';
+import type { User } from '../types/user';
 
 interface AuthState {
-  user: MeResponse | null;
   accessToken: string | null;
-  isAuthenticated: boolean;
-  isAdmin: boolean;
-  isLoading: boolean;
-  setAuth: (user: MeResponse, accessToken: string) => void;
-  setUser: (user: MeResponse) => void;
-  setAccessToken: (token: string) => void;
+  refreshToken: string | null;
+  user: User | null;
+  setSession: (accesstoken: string, refreshtoken: string, user: User) => void;
   logout: () => void;
-  setLoading: (loading: boolean) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
-      user: null,
       accessToken: null,
-      isAuthenticated: false,
-      isAdmin: false,
-      isLoading: true,
-
-      setAuth: (user: MeResponse, accessToken: string) => {
-        set({
-          user,
-          accessToken,
-          isAuthenticated: true,
-          isAdmin: user.role === 'ADMIN',
-          isLoading: false,
-        });
-      },
-
-      setUser: (user: MeResponse) => {
-        set({ user, isAdmin: user.role === 'ADMIN' });
-      },
-
-      setAccessToken: (accessToken: string) => {
-        set({ accessToken });
-      },
-
-      logout: () => {
-        set({
-          user: null,
-          accessToken: null,
-          isAuthenticated: false,
-          isAdmin: false,
-          isLoading: false,
-        });
-      },
-
-      setLoading: (isLoading: boolean) => {
-        set({ isLoading });
-      },
+      refreshToken: null,
+      user: null,
+      setSession: (accesstoken, refreshtoken, user) =>
+        set({ accessToken: accesstoken, refreshToken: refreshtoken, user }),
+      logout: () => set({ accessToken: null, refreshToken: null, user: null }),
     }),
-    {
-      name: 'jobylo-auth',
-      partialize: (state: AuthState) => ({
-        accessToken: state.accessToken,
-        user: state.user,
-      }),
-    }
+    { name: 'admin-auth' }
   )
 );

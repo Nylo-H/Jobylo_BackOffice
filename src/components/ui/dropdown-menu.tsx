@@ -11,7 +11,7 @@ const DropdownMenuContext = React.createContext<DropdownMenuContextType>({
   onOpenChange: () => {},
 });
 
-export function DropdownMenu({ children }: { children: React.ReactNode }) {
+function DropdownMenu({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = React.useState(false);
   return (
     <DropdownMenuContext.Provider value={{ open, onOpenChange: setOpen }}>
@@ -22,7 +22,7 @@ export function DropdownMenu({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const DropdownMenuTrigger = React.forwardRef<
+const DropdownMenuTrigger = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
 >(({ className, onClick, ...props }, ref) => {
@@ -41,7 +41,7 @@ export const DropdownMenuTrigger = React.forwardRef<
 });
 DropdownMenuTrigger.displayName = 'DropdownMenuTrigger';
 
-export const DropdownMenuContent = React.forwardRef<
+const DropdownMenuContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & { align?: 'start' | 'end' }
 >(({ className, align = 'start', ...props }, ref) => {
@@ -69,7 +69,7 @@ export const DropdownMenuContent = React.forwardRef<
 });
 DropdownMenuContent.displayName = 'DropdownMenuContent';
 
-export const DropdownMenuItem = React.forwardRef<
+const DropdownMenuItem = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, onClick, ...props }, ref) => {
@@ -91,9 +91,17 @@ export const DropdownMenuItem = React.forwardRef<
 });
 DropdownMenuItem.displayName = 'DropdownMenuItem';
 
-export const DropdownMenuSeparator = ({
+const DropdownMenuSeparator = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div className={cn('h-px bg-border my-1', className)} {...props} />
 );
+
+export {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+};
